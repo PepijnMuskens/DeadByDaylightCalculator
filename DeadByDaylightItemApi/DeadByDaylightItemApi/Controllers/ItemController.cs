@@ -21,5 +21,13 @@ namespace DeadByDaylightItemApi.Controllers
         {
             return itemContainer.GetAllItems();
         }
+
+        [HttpGet]
+        [Route("GetAll/{type}")]
+        public IEnumerable<Item> Get(string type)
+        {
+            
+            return itemContainer.GetAllItems(type);
+        }
     }
 }
