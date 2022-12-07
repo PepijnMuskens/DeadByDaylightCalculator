@@ -10,7 +10,7 @@
       <div>
         <h2>inventory</h2>
         <div v-if="(selectedindex === 0)" class="inventory">
-            <div class="card" v-for="item in items" :key="item.id">
+            <div class="card" v-for="item in allItems" :key="item.id">
             <InventoryItemSlot :item="item" @item="getData($event)"/>
           </div>
         </div>
@@ -52,7 +52,9 @@ export default {
   data(){
     return{
       items:[],
+      allItems:[],
       addons:[],
+      allAddons:[],
       selectedindex:0,
       selecteditem:Object,
       selectedaddon1:Object,
@@ -66,12 +68,12 @@ export default {
   methods : {
     async getItems(){
     let result = await axios.get("https://localhost:7134/Item/GetAll");
-    this.items = result.data;
+    this.allItems = result.data;
     console.log(result.data);
     },
     async getAddons(){
     let result = await axios.get("https://localhost:7134/Addon/GetAll");
-    this.addons = result.data;
+    this.allAddons = result.data;
     console.log(result.data);
     },
     async getAddonsByType(type){
@@ -84,18 +86,23 @@ export default {
     },
      getData(data){
       if(this.selectedindex == 0){
+        if(this.selecteditem.type != data.type){
+          this.selectedaddon1 = Object;
+          this.selectedaddon2 = Object;
+        }
         this.selecteditem = data;
         this.selectedindex = 1;
-        this.addons = this.getAddonsByType(data.type)
+        this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
+        
       }
       else if(this.selectedindex == 1){
         this.selectedaddon1 = data;
         this.selectedindex = 2;
-        this.addons = this.addons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id);
+        this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
       }
       else if(this.selectedindex == 2){
         this.selectedaddon2 = data;
-        this.addons = this.addons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id);
+        this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
       }
       
     }
