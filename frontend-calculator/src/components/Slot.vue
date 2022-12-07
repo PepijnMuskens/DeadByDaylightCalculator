@@ -1,34 +1,26 @@
-<template>
-    <div class="card">
-            <img :src="('data:image/jpeg;base64,'+item.icon)">
-    </div>
-    </template>
+    <template>
+        <input type="image" :src="('data:image/jpeg;base64,'+item.icon)" @click="click">
+    </template> 
     
     <script>
     export default {
-      name: 'ItemCard',
+      name: 'ItemSlot',
       props: {
-        item: Object
+        item: Object,
+        index: Number
+      },
+      methods:{
+        click(){
+        this.$emit('slot',this.index)
+        }
       }
     }
     </script>
     
     <style scoped>
-      .card{
-          background: "('data:image/jpeg;base64,'+item.icon)";
-          background-repeat: inherit;
-          display: flex;
-          justify-content: flex-start;
-          flex-direction: column ;;
-          width: 50px;
-          height: 50px;
-      }
-      a {
-          color: white;
-          text-decoration: none;
-          text-transform: uppercase;
-      }
-      h3{
-        color: gray;
-      }
+    input{
+      width: 100%;
+      height: 100%;
+      
+    }
     </style>

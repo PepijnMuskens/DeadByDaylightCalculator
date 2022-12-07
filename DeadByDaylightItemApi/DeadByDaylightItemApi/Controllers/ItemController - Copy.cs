@@ -26,7 +26,7 @@ namespace DeadByDaylightItemApi.Controllers
         [Route("GetAll/{type}")]
         public IEnumerable<Item> Get(string type)
         {
-            
+            Interface.Type type1 = (Interface.Type)Convert.ToInt16(type);
             return itemContainer.GetAllItems(type);
         }
     }
