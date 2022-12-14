@@ -33,21 +33,50 @@
       </div>
       <div>
         <h2>SELECT</h2>
+        <div class="select">
+          <div v-if="(selecteditem == Object || selecteditem.type == 0)">
+          <h3>medkit</h3>
+          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="0" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
+        </div>
+
+        <div v-if="(selecteditem == Object || selecteditem.type == 1)">
+          <h3>toolbox</h3>
+          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="1" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
+        </div>
+
+        <div v-if="(selecteditem == Object || selecteditem.type == 2)">
+          <h3>flashlight</h3>
+          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="2" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
+        </div>
+
+        <div v-if="(selecteditem == Object || selecteditem.type == 3)">
+          <h3>key</h3>
+          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="3" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
+        </div>
+
+        <div v-if="(selecteditem == Object || selecteditem.type == 4)">
+          <h3>map</h3>
+          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="4" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
+        </div>
+        </div>
+        
+
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 import InventoryItemSlot from "./components/InventoryItemSlot"
 import ItemAddonRow from "./components/ItemAddonRow"
+import CalculateBtn from "./components/CalculateBtn"
 import axios from "axios"
 export default {
   name: 'App',
   components: {
     InventoryItemSlot: InventoryItemSlot,
-    ItemAddonRow : ItemAddonRow
+    ItemAddonRow : ItemAddonRow,
+    CalculateBtn: CalculateBtn
   },
   data(){
     return{
@@ -84,7 +113,13 @@ export default {
     getSlot(data){
       this.selectedindex = data;
     },
-     getData(data){
+    UpdateLoadout(loadout){
+      this.selecteditem = loadout.item
+      this.selectedaddon1 = loadout.addons[0]
+      this.selectedaddon2 = loadout.addons[1]
+      this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
+    },
+    getData(data){
       if(this.selectedindex == 0){
         if(this.selecteditem.type != data.type){
           this.selectedaddon1 = Object;
@@ -138,6 +173,18 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   border-style: solid;
+}
+.select{
+  display: flex;
+  padding: 25px;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-style: solid;
+}
+.selectbtn{
+  width:80pt;
+  height: fit-content;
 }
 .card{
           background: "('data:image/jpeg;base64,'+item.icon)";
