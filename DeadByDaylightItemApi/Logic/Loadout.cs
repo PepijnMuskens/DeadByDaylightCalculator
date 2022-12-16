@@ -22,6 +22,11 @@ namespace Logic
         public double TimeSaveSelfHeal { get; private set; }
 
         //toolbox
+        public double TimetoSabo { get; private set; }
+        public double NrOfSabo { get; private set; }
+        public double TimeSaveRepair { get; private set; }
+        public double RepairDuration { get; private set; }
+        public double RepairSpeed { get; private set; }
 
 
         //flashlight
@@ -66,16 +71,28 @@ namespace Logic
                         
                         break;
                     case "Toolbox":
+                        Toolbox toolbox = (Toolbox)Item;
+                        ToolboxAddon taddon1 = Addons[0].id == 0 ? new ToolboxAddon(new Interface.AddonDTO()) : (ToolboxAddon)Addons[0];
+                        ToolboxAddon taddon2 = Addons[1].id == 0 ? new ToolboxAddon(new Interface.AddonDTO()) : (ToolboxAddon)Addons[1];
+
+                        NrOfSabo = Charges / 6;
+                        TimetoSabo = 6 / (toolbox.saboSpeed * (1+taddon1.saboSpeed + taddon2.saboSpeed));
+                        RepairSpeed = toolbox.repairSpeed + taddon1.repairSpeed + taddon2.repairSpeed;
+                        RepairDuration = Charges / RepairSpeed;
+                        TimeSaveRepair = Charges - RepairDuration;
+
                         break;
                     case "Flashlight":
                         Flashlight flashlight = (Flashlight)Item;
-                            FlashlightAddon faddon1 = Addons[0].id == 0 ? new FlashlightAddon(new Interface.AddonDTO()) : (FlashlightAddon)Addons[0];
-                            FlashlightAddon faddon2 = Addons[1].id == 0 ? new FlashlightAddon(new Interface.AddonDTO()) : (FlashlightAddon)Addons[1];
-                            BeamRange = flashlight.beamRange * (faddon1.beamRange + faddon2.beamRange + 1);
-                            BeamWidth = flashlight.beamAngle * (faddon1.beamAngle + faddon2.beamAngle + 1);
-                            Duration = Charges / (flashlight.consumptionRate - faddon1.consumptionRate - faddon2.consumptionRate);
-                            BlindDuration = flashlight.blindDuration * (faddon1.blindDuration + faddon2.blindDuration + 1);
+                        FlashlightAddon faddon1 = Addons[0].id == 0 ? new FlashlightAddon(new Interface.AddonDTO()) : (FlashlightAddon)Addons[0];
+                        FlashlightAddon faddon2 = Addons[1].id == 0 ? new FlashlightAddon(new Interface.AddonDTO()) : (FlashlightAddon)Addons[1];
+                        
+                        BeamRange = flashlight.beamRange * (faddon1.beamRange + faddon2.beamRange + 1);
+                        BeamWidth = flashlight.beamAngle * (faddon1.beamAngle + faddon2.beamAngle + 1);
+                        Duration = Charges / (flashlight.consumptionRate - faddon1.consumptionRate - faddon2.consumptionRate);
+                        BlindDuration = flashlight.blindDuration * (faddon1.blindDuration + faddon2.blindDuration + 1);
                         NrOfBlinds = Duration / 1.2;
+
                         break;
                     case "Key":
                         break;

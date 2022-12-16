@@ -71,7 +71,7 @@
 import InventoryItemSlot from "./components/InventoryItemSlot"
 import ItemAddonRow from "./components/ItemAddonRow"
 import CalculateBtn from "./components/CalculateBtn"
-import Info from "./components/Info"
+import Info from "./components/Info/Info.vue"
 import axios from "axios"
 export default {
   name: 'App',
@@ -79,7 +79,7 @@ export default {
     InventoryItemSlot: InventoryItemSlot,
     ItemAddonRow : ItemAddonRow,
     CalculateBtn: CalculateBtn,
-    Info : Info
+    Info: Info
   },
   data(){
     return{
