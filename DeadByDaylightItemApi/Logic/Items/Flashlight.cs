@@ -6,17 +6,17 @@ namespace Logic.Items
 {
     public class Flashlight : Item
     {
-        public double BlindDuration { get; set; }
-        public double BlindSpeed { get; set; }
-        public double BeamRange { get; set; }
-        public double BeamAngle { get; set; }
+        public double blindDuration { get; set; }
+        public double blindSpeed { get; set; }
+        public double beamRange { get; set; }
+        public double beamAngle { get; set; }
 
         public Flashlight(Interface.ItemDTO itemDTO) : base(itemDTO)
         {
-            BlindDuration = itemDTO.BlindDuration;
-            BlindSpeed = itemDTO.BlindSpeed;
-            BeamRange = itemDTO.BeamRange;
-            BeamAngle = itemDTO.BeamAngle;
+            blindDuration = itemDTO.BlindDuration;
+            blindSpeed = itemDTO.BlindSpeed;
+            beamRange = itemDTO.BeamRange;
+            beamAngle = itemDTO.BeamAngle;
         } 
     }
 }

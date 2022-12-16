@@ -6,13 +6,13 @@ namespace Logic.Items
 {
     public class Toolbox : Item
     {
-        public double RepairSpeed { get; set; }
-        public double SaboSpeed { get; set; }
+        public double repairSpeed { get; set; }
+        public double saboSpeed { get; set; }
 
         public Toolbox(Interface.ItemDTO itemDTO) : base(itemDTO)
         {
-            RepairSpeed = itemDTO.RepairSpeed;
-            SaboSpeed = itemDTO.SaboSpeed;
+            repairSpeed = itemDTO.RepairSpeed;
+            saboSpeed = itemDTO.SaboSpeed;
         }
     }
 }

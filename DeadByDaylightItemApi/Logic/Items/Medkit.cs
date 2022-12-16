@@ -6,13 +6,13 @@ namespace Logic.Items
 {
     public class Medkit : Item
     {
-        public double SelfHealSpeed { get; set; }
-        public double HealSpeed { get; set; }
+        public double selfHealSpeed { get; set; }
+        public double healSpeed { get; set; }
 
         public Medkit(Interface.ItemDTO itemDTO) : base(itemDTO)
         {
-            SelfHealSpeed = itemDTO.SelfHealSpeed;
-            HealSpeed = itemDTO.HealSpeed;
+            selfHealSpeed = itemDTO.SelfHealSpeed;
+            healSpeed = itemDTO.HealSpeed;
         }
     }
 }

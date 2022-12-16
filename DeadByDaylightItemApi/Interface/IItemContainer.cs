@@ -7,6 +7,7 @@ namespace Interface
     public interface IItemContainer
     {
         public List<ItemDTO> GetAllItems();
+        public List<ItemDTO> GetAllItems(string type);
 
     }
 }

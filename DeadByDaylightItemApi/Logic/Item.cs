@@ -6,20 +6,20 @@ namespace Logic
 {
     public class Item
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Interface.Type Type { get; set; }
-        public int Charges { get; set; }
-        public double ConsumptionRate { get; set; }
-        public byte[] Icon { get; private set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public Interface.Type type { get; set; }
+        public int charges { get; set; }
+        public double consumptionRate { get; set; }
+        public byte[] icon { get; private set; }
         public Item(Interface.ItemDTO itemDTO)
         {
-            Id = itemDTO.Id;
-            Icon = itemDTO.Icon;
-            Name = itemDTO.Name;
-            Type = itemDTO.Type;
-            Charges = itemDTO.Charges;
-            ConsumptionRate = itemDTO.ConsumptionRate;
+            id = itemDTO.Id;
+            icon = itemDTO.Icon;
+            name = itemDTO.Name;
+            type = itemDTO.Type;
+            charges = itemDTO.Charges;
+            consumptionRate = itemDTO.ConsumptionRate;
         }
     }
 }

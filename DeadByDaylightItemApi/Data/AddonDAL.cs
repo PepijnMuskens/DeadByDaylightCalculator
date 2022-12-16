@@ -65,6 +65,56 @@ namespace Data
             return addonDTOs;
         }
 
+        
+
+        public List<Interface.AddonDTO> GetAllAddons(string type)
+        {
+            List<Interface.AddonDTO> addonDTOs = new List<Interface.AddonDTO>();
+            try
+            {
+                connection.Open();
+                string query = $"SELECT * FROM `addon` WHERE `Type` = '{type}';";
+                var cmd = new MySqlCommand(query, connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    Interface.AddonDTO addonDTO = new Interface.AddonDTO();
+                    addonDTO.Id = reader.GetInt32(0);
+                    addonDTO.Name = reader.GetString(1);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (addonDTO.Type.ToString() != type)
+                        {
+                            addonDTO.Type++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    addonDTO.Charges = reader.GetInt32(3);
+                    addonDTO.ConsumptionRate = reader.GetDouble(4);
+                    addonDTO.SelfHealSpeed = reader.GetDouble(5);
+                    addonDTO.HealSpeed = reader.GetDouble(6);
+                    addonDTO.RepairSpeed = reader.GetDouble(7);
+                    addonDTO.SaboSpeed = reader.GetDouble(8);
+                    addonDTO.BlindDuration = reader.GetDouble(9);
+                    addonDTO.BlindSpeed = reader.GetDouble(10);
+                    addonDTO.BeamRange = reader.GetDouble(11);
+                    addonDTO.BeamAngle = reader.GetDouble(12);
+                    addonDTO.Aurarange = reader.GetDouble(13);
+                    addonDTO.Icon = (byte[])reader.GetValue(14);
+                    addonDTOs.Add(addonDTO);
+                }
+                connection.Close();
+            }
+            catch
+            {
+                Console.WriteLine("Can not open connection ! ");
+            }
+            return addonDTOs;
+        }
         public Interface.AddonDTO GetAddonById(int addonid)
         {
             Interface.AddonDTO addonDTO = new Interface.AddonDTO();

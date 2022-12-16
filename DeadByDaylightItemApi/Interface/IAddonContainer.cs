@@ -7,5 +7,6 @@ namespace Interface
     public interface IAddonContainer
     {
         public List<AddonDTO> GetAllAddons();
+        public List<AddonDTO> GetAllAddons(string type);
     }
 }

@@ -22,5 +22,24 @@ namespace Interface
         public double Aurarange;
         public byte[] Icon;
         
+        public AddonDTO(Type type)
+        {
+            Id = 0;
+            Name = "";
+            Type = type;
+            Charges = 0;
+            ConsumptionRate = 0;
+            SelfHealSpeed = 0;
+            HealSpeed = 0;
+            RepairSpeed = 0;
+            SaboSpeed = 0;
+            BlindDuration = 0;
+            BlindSpeed = 0;
+            BeamRange = 0;
+            BeamAngle = 0;
+            Aurarange = 0;
+            Icon = null;
+        }
     }
+
 }

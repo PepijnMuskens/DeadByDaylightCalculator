@@ -6,11 +6,11 @@ namespace Logic.Items
 {
     public class Key : Item
     {
-        public double Aurarange { get; set; }
+        public double aurarange { get; set; }
 
         public Key(Interface.ItemDTO itemDTO) : base(itemDTO)
         {
-            Aurarange = itemDTO.Aurarange;
+            aurarange = itemDTO.Aurarange;
         }
     }
 }

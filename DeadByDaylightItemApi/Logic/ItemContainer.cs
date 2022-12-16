@@ -20,7 +20,7 @@ namespace Logic
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name == name && Items[i].Type.ToString() == "Medkit")
+                if (Items[i].name == name && Items[i].type.ToString() == "Medkit")
                 {
                     return (Logic.Items.Medkit)Items[i];
                 }
@@ -31,7 +31,7 @@ namespace Logic
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name == name && Items[i].Type.ToString() == "Toolbox")
+                if (Items[i].name == name && Items[i].type.ToString() == "Toolbox")
                 {
                     return (Items.Toolbox)Items[i];
                 }
@@ -42,7 +42,7 @@ namespace Logic
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name == name && Items[i].Type.ToString() == "Flashlight")
+                if (Items[i].name == name && Items[i].type.ToString() == "Flashlight")
                 {
                     return (Logic.Items.Flashlight)Items[i];
                 }
@@ -53,7 +53,7 @@ namespace Logic
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name == name && Items[i].Type.ToString() == "Key")
+                if (Items[i].name == name && Items[i].type.ToString() == "Key")
                 {
                     return (Logic.Items.Key)Items[i];
                 }
@@ -64,7 +64,7 @@ namespace Logic
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name == name && Items[i].Type.ToString() == "Map")
+                if (Items[i].name == name && Items[i].type.ToString() == "Map")
                 {
                     return (Logic.Items.Map)Items[i];
                 }
@@ -75,6 +75,33 @@ namespace Logic
         {
             Items.Clear();
             foreach (Interface.ItemDTO itemDTO in IItemContainer.GetAllItems())
+            {
+                switch (itemDTO.Type.ToString())
+                {
+                    case "Medkit":
+                        Items.Add(new Items.Medkit(itemDTO));
+                        break;
+                    case "Toolbox":
+                        Items.Add(new Items.Toolbox(itemDTO));
+                        break;
+                    case "Flashlight":
+                        Items.Add(new Items.Flashlight(itemDTO));
+                        break;
+                    case "Key":
+                        Items.Add(new Items.Key(itemDTO));
+                        break;
+                    case "Map":
+                        Items.Add(new Items.Map(itemDTO));
+                        break;
+                }
+            }
+            return Items;
+        }
+
+        public List<Item> GetAllItems(string type)
+        {
+            Items.Clear();
+            foreach (Interface.ItemDTO itemDTO in IItemContainer.GetAllItems(type))
             {
                 switch (itemDTO.Type.ToString())
                 {

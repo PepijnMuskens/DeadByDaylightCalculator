@@ -1,77 +1,81 @@
-﻿using System;
+﻿using Logic.Addons;
+using Logic.Items;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace Logic
 {
     public class Loadout
     {
-        public Item Item;
-        public Addon[] Addons;
-        public Perk[] Perks;
-        public Effect[] KillerEffects;
-        public List<Effect> SurvivorEffects;
+        public Item Item { get; set; }
+        public Addon[] Addons { get; set; }
 
         public double TimeSave { get; private set;}
         public double Charges { get; private set;}
+
+        //medkit
         public double Heals { get; private set; }
         public double TimeToHeal { get; private set; }
         public double TimeToSelfHeal { get; private set; }
+        public double TimeSaveSelfHeal { get; private set; }
+
+        //toolbox
+
+
+        //flashlight
+        public double BeamRange { get; private set; }
+        public double BeamWidth { get; private set; }
+        public double Duration { get; private set; }
+        public double NrOfBlinds { get; private set; }
+        public double BlindDuration { get; private set; }
+
+
         public string Info { get; set; }
-        private double streetwise;
 
         public Loadout()
         {
             Item = new Item(new Interface.ItemDTO());
             Addons = new Addon[2];
-            Perks = new Perk[4];
-            KillerEffects = new Effect[4];
-            SurvivorEffects = new List<Effect>();
         }
 
         public void Update()
         {
             if (Item != null)
             {
-                int itemCharges = Item.Charges;
+                if (Addons[0] == null) Addons[0] = new Addon(new Interface.AddonDTO());
+                if (Addons[1] == null) Addons[1] = new Addon(new Interface.AddonDTO());
+                Charges = Item.charges;
                 foreach (Addon addon in Addons)
                 {
-                    itemCharges += addon.Charges;
+                    Charges += addon.charges;
                 }
-                double perkCharges = 1;
-                foreach(Perk perk in Perks)
-                {
-                    perkCharges += perk.ChargesMultiplier;
-                    streetwise += perk.ItemEffMultiplier;
-                }
-                foreach(Effect effect in KillerEffects)
-                {
-                    
-                }
-                switch (Item.Type.ToString())
+                switch (Item.type.ToString())
                 {
                     case "Medkit":
+                        Medkit medkit = (Medkit)Item;
+                        MedkitAddon addon1 = Addons[0].id == 0 ? new MedkitAddon(new Interface.AddonDTO()) : (MedkitAddon)Addons[0];
+                        MedkitAddon addon2 = Addons[1].id == 0 ? new MedkitAddon(new Interface.AddonDTO()) : (MedkitAddon)Addons[1];
+
                         Heals = Charges / 16;
-                        double perkHealspeed = 0;
-                        double perkSelfHealspeed = 0;
-                        foreach (Perk perk in Perks)
-                        {
-                            perkHealspeed += perk.HealSpeedMultiplier;
-                            perkSelfHealspeed += perk.SelfHealSpeedMultiplier;
-                        }
-                        foreach (Addon addon in Addons)
-                        {
-                            if(addon.Type.ToString() == "Medkit")
-                            {
-                                Addon addon1 = (Logic.Addons.MedkitAddon)addon;
-                                
-                            }
-                        }
+                        TimeToHeal = 16 / (medkit.healSpeed + addon1.healSpeed + addon2.healSpeed);
+                        TimeToSelfHeal = 16 / (medkit.selfHealSpeed + addon1.selfHealSpeed + addon2.selfHealSpeed);
+                        TimeSave = Heals * (16 - TimeToHeal);
+                        TimeSaveSelfHeal = Heals * (32 - TimeToSelfHeal);
                         
                         break;
                     case "Toolbox":
                         break;
                     case "Flashlight":
+                        Flashlight flashlight = (Flashlight)Item;
+                            FlashlightAddon faddon1 = Addons[0].id == 0 ? new FlashlightAddon(new Interface.AddonDTO()) : (FlashlightAddon)Addons[0];
+                            FlashlightAddon faddon2 = Addons[1].id == 0 ? new FlashlightAddon(new Interface.AddonDTO()) : (FlashlightAddon)Addons[1];
+                            BeamRange = flashlight.beamRange * (faddon1.beamRange + faddon2.beamRange + 1);
+                            BeamWidth = flashlight.beamAngle * (faddon1.beamAngle + faddon2.beamAngle + 1);
+                            Duration = Charges / (flashlight.consumptionRate - faddon1.consumptionRate - faddon2.consumptionRate);
+                            BlindDuration = flashlight.blindDuration * (faddon1.blindDuration + faddon2.blindDuration + 1);
+                        NrOfBlinds = Duration / 1.2;
                         break;
                     case "Key":
                         break;

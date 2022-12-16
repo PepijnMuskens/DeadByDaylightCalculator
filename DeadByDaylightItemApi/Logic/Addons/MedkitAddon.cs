@@ -6,13 +6,13 @@ namespace Logic.Addons
 {
     public class MedkitAddon : Addon
     {
-        public double HealSpeed { get; set; }
-        public double SelfHealSpeed { get; set; }
+        public double healSpeed { get; set; }
+        public double selfHealSpeed { get; set; }
 
         public MedkitAddon(Interface.AddonDTO addonDTO) : base(addonDTO)
         {
-            HealSpeed = addonDTO.HealSpeed;
-            SelfHealSpeed = addonDTO.SelfHealSpeed;
+            healSpeed = addonDTO.HealSpeed;
+            selfHealSpeed = addonDTO.SelfHealSpeed;
         }
     }
 }

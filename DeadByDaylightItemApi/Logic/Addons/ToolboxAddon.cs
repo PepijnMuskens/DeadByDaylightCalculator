@@ -6,13 +6,13 @@ namespace Logic.Addons
 {
     public class ToolboxAddon : Addon
     {
-        public double RepairSpeed { get; set; }
-        public double SaboSpeed { get; set; }
+        public double repairSpeed { get; set; }
+        public double saboSpeed { get; set; }
 
         public ToolboxAddon(Interface.AddonDTO addonDTO) : base(addonDTO)
         {
-            RepairSpeed = addonDTO.RepairSpeed;
-            SaboSpeed = addonDTO.SaboSpeed;
+            repairSpeed = addonDTO.RepairSpeed;
+            saboSpeed = addonDTO.SaboSpeed;
         }
     }
 }
