@@ -30,6 +30,7 @@
     <div class="half">
       <div>
         <h2>INFO</h2>
+        <info :loadout="loadout"></info>
       </div>
       <div>
         <h2>SELECT</h2>
@@ -70,13 +71,15 @@
 import InventoryItemSlot from "./components/InventoryItemSlot"
 import ItemAddonRow from "./components/ItemAddonRow"
 import CalculateBtn from "./components/CalculateBtn"
+import Info from "./components/Info"
 import axios from "axios"
 export default {
   name: 'App',
   components: {
     InventoryItemSlot: InventoryItemSlot,
     ItemAddonRow : ItemAddonRow,
-    CalculateBtn: CalculateBtn
+    CalculateBtn: CalculateBtn,
+    Info : Info
   },
   data(){
     return{
@@ -87,7 +90,8 @@ export default {
       selectedindex:0,
       selecteditem:Object,
       selectedaddon1:Object,
-      selectedaddon2:Object
+      selectedaddon2:Object,
+      loadout: Object
     }
   },
   created(){
@@ -110,6 +114,15 @@ export default {
     this.addons = result.data;
     console.log(result.data);
     },
+    async Update(){
+    let addon1id = 0
+    let addon2id = 0
+    if(this.selectedaddon1.id != undefined) addon1id = this.selectedaddon1.id
+    if(this.selectedaddon2.id != undefined) addon2id = this.selectedaddon2.id
+    let result = await axios.get("https://localhost:7134/Calculate/Update?itemid="+this.selecteditem.id+"&addon1id="+addon1id+"&addon2id="+ addon2id);
+    this.loadout = result.data;
+    console.log(result.data);
+    },
     getSlot(data){
       this.selectedindex = data;
     },
@@ -118,17 +131,23 @@ export default {
       this.selectedaddon1 = loadout.addons[0]
       this.selectedaddon2 = loadout.addons[1]
       this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
+      this.loadout = loadout
     },
     getData(data){
       if(this.selectedindex == 0){
-        if(this.selecteditem.type != data.type){
+       if(this.selecteditem.type != data.type){
           this.selectedaddon1 = Object;
           this.selectedaddon2 = Object;
         }
-        this.selecteditem = data;
-        this.selectedindex = 1;
-        this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
-        
+        if(this.selecteditem.id == data.id){
+          this.selecteditem = Object;
+          this.selectedaddon1 = Object;
+          this.selectedaddon2 = Object;
+        }else{
+          this.selecteditem = data;
+          this.selectedindex = 1;
+          this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
+        }
       }
       else if(this.selectedindex == 1){
         this.selectedaddon1 = data;
@@ -139,7 +158,7 @@ export default {
         this.selectedaddon2 = data;
         this.addons = this.allAddons.filter(addon => addon.id != this.selectedaddon1.id && addon.id != this.selectedaddon2.id && addon.type == this.selecteditem.type);
       }
-      
+      this.Update()
     }
   }
 }

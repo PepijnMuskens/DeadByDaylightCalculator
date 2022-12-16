@@ -1,7 +1,7 @@
   <template>
-      <button class="button">
-      </button>
-    </template> 
+      <Button>
+      </Button>
+  </template> 
     
     <script>
     export default {
@@ -10,9 +10,11 @@
     </script>
     
     <style scoped>
-    .button{
+    button{
       width: 100%;
       height: 100%;
-      background: lightgray;
+      background-image: url(..//assets/emptySlot.png);
+      background-size: contain;
+      background-repeat: no-repeat;
     }
     </style>

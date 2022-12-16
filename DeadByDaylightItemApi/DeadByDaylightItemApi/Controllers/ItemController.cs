@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Logic;
+using System.Text.Json;
+
 namespace DeadByDaylightItemApi.Controllers
 {
     [ApiController]
@@ -17,17 +19,34 @@ namespace DeadByDaylightItemApi.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public IEnumerable<Item> Get()
+        public string Get()
         {
-            return itemContainer.GetAllItems();
+            List<Item> items = itemContainer.GetAllItems();
+            string json = "[";
+            for (int i = 0; i<items.Count; i++)
+            {
+                if (i != 0) json += ",";
+                json += JsonSerializer.Serialize(items[i], items[i].GetType());
+            }
+            json += "]";
+
+            return json;
         }
 
         [HttpGet]
         [Route("GetAll/{type}")]
-        public IEnumerable<Item> Get(string type)
+        public string Get(string type)
         {
-            Interface.Type type1 = (Interface.Type)Convert.ToInt16(type);
-            return itemContainer.GetAllItems(type);
+            List<Item> items = itemContainer.GetAllItems(type);
+            string json = "[";
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (i != 0) json += ",";
+                json += JsonSerializer.Serialize(items[i], items[i].GetType());
+            }
+            json += "]";
+
+            return json;
         }
     }
 }

@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Logic;
+using Interface;
+using System.Text.Json;
+
 namespace DeadByDaylightaddonApi.Controllers
 {
     [ApiController]
@@ -17,17 +20,35 @@ namespace DeadByDaylightaddonApi.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public IEnumerable<Addon> Get()
+        public string Get()
         {
-            return addonContainer.GetAllAddons();
+            List<Addon> addons = addonContainer.GetAllAddons();
+            string json = "[";
+            for (int i = 0; i < addons.Count; i++)
+            {
+                if (i != 0) json += ",";
+                json += JsonSerializer.Serialize(addons[i], addons[i].GetType());
+            }
+            json += "]";
+
+            return json;
         }
 
         [HttpGet]
         [Route("GetAll/{type}")]
-        public IEnumerable<Addon> Get(string type)
+        public string Get(string type)
         {
             Interface.Type type1 = (Interface.Type)Convert.ToInt16(type);
-            return addonContainer.GetAllAddons(type1.ToString());
+            List<Addon> addons = addonContainer.GetAllAddons(type1.ToString());
+            string json = "[";
+            for (int i = 0; i < addons.Count; i++)
+            {
+                if (i != 0) json += ",";
+                json += JsonSerializer.Serialize(addons[i], addons[i].GetType());
+            }
+            json += "]";
+
+            return json;
         }
     }
 }

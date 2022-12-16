@@ -1,17 +1,18 @@
 <template>
   <div class="row">
     <div class="itemdiv">
-    <Slot v-if="hasitem" :item="item" :index="0" @slot="getData($event)"></Slot>
+    <Slot v-if="item != Object" :item="item" :index="0" @slot="getData($event)"></Slot>
     <EmptySlot v-else></EmptySlot>
     </div>
-    <div class="addondiv">
-      <Slot v-if="hasaddon1" :item="addon1" :index="1" @slot="getData($event)"></Slot>
+      <div class="addondiv">
+      <Slot v-if="addon1 != Object" :item="addon1" :index="1" @slot="getData($event)"></Slot>
     <EmptySlot v-else></EmptySlot>
     </div>
-    <div class="addondiv">
-      <Slot v-if="hasaddon2" :item="addon2" :index="2" @slot="getData($event)"></Slot>
-    <EmptySlot v-else></EmptySlot>
-    </div>
+      <div class="addondiv">
+        <Slot v-if="addon2 != Object" :item="addon2" :index="2" @slot="getData($event)"></Slot>
+        <EmptySlot v-else></EmptySlot>
+      </div>
+   
   </div>
 </template>
     
@@ -61,14 +62,23 @@
       flex-direction: row;
     }
       .itemdiv{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        margin:10pt;
           width: 100pt;
           height: 100pt;
-          padding-right: 10pt;
       }
       .addondiv{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10pt;
+        margin-top: 20pt;
           width: 80pt;
           height: 80pt;
-          padding: 10pt;
+          
       }
       a {
           color: white;
