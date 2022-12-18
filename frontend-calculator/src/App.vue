@@ -176,7 +176,6 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  border-style: solid;
 }
 .half{
   display: flex;
@@ -184,14 +183,12 @@ export default {
   padding-left: 5%;
   padding-right: 5%;
   width: 40%;
-  border-style: solid;
 }
 .inventory{
   display: flex;
   padding: 25px;
   flex-direction: row;
   flex-wrap: wrap;
-  border-style: solid;
 }
 .select{
   display: flex;
@@ -199,7 +196,6 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  border-style: solid;
 }
 .selectbtn{
   width:80pt;

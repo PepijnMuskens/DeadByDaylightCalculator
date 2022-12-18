@@ -44,7 +44,7 @@ namespace Data
                         }
                     }
                     itemDTO.Charges = reader.GetInt32(3);
-                    itemDTO.ConsumptionRate = reader.GetInt32(4);
+                    itemDTO.ConsumptionRate = reader.GetDouble(4);
                     itemDTO.SelfHealSpeed = reader.GetDouble(5);
                     itemDTO.HealSpeed = reader.GetDouble(6);
                     itemDTO.RepairSpeed = reader.GetDouble(7);
