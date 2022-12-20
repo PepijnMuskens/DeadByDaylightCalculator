@@ -1,3 +1,4 @@
+using Logic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeadByDaylightItemApi.Controllers
@@ -23,6 +24,15 @@ namespace DeadByDaylightItemApi.Controllers
         public string Get()
         {
             return "works";
+        }
+
+        [HttpGet]
+        [Route("Get")]
+        public string Geter()
+        {
+            string hello = "";
+            Calculator.GetLongestDuration(1).ToString();
+            return hello;
         }
     }
 }

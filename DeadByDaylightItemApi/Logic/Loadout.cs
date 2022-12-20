@@ -79,7 +79,7 @@ namespace Logic
                         ToolboxAddon taddon2 = Addons[1].id == 0 ? new ToolboxAddon(new Interface.AddonDTO()) : (ToolboxAddon)Addons[1];
 
                         NrOfSabo = Charges / 6;
-                        TimetoSabo = 6 / (toolbox.saboSpeed * (1+taddon1.saboSpeed + taddon2.saboSpeed));
+                        TimetoSabo = 6 / (toolbox.saboSpeed +taddon1.saboSpeed + taddon2.saboSpeed);
                         RepairSpeed = toolbox.repairSpeed + taddon1.repairSpeed + taddon2.repairSpeed;
                         RepairDuration = Charges / RepairSpeed;
                         TimeSaveRepair = Charges - RepairDuration;

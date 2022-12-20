@@ -1,5 +1,5 @@
 <template>
-  <button class="selectbtn" @click="click">{{ text }}</button>
+  <button class="calcbtn" @click="click">{{ text }}</button>
 </template> 
   
   <script>
@@ -10,15 +10,16 @@
       type: Number,
       path: Text,
       text: String ,
-      item: Object
+      item: Object,
+      baseaddress: String
     },
     methods:{
       async click(){
         let result;
         if(this.item == Object){
-             result = await axios.get("https://localhost:7134/Calculate/"+ this.path +"/?type=" + this.type);
+             result = await axios.get(this.baseaddress + "/Calculate/"+ this.path +"/?type=" + this.type);
         }else{
-            result = await axios.get("https://localhost:7134/Calculate/"+ this.path +"/" + this.item.id);
+            result = await axios.get(this.baseaddress + "/Calculate/"+ this.path +"/" + this.item.id);
             
         }
         console.log(result.data);

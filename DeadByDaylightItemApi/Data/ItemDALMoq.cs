@@ -1,71 +1,27 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using Interface;
 using MySql.Data.MySqlClient;
-
+using System.Text.Json;
 
 namespace Data
 {
-    public class ItemDAL : IItemContainer
+    public class ItemDALMoq : IItemContainer
     {
-        private string connectionString = "server=sql7.freesqldatabase.com;user=sql7585399;database=sql7585399;port=3306;password='guWYYxITAN';SslMode=none";
-        private string connectionStringlocal = "server=studmysql01.fhict.local;user=dbi437675;database=dbi437675;port=3306;password='Mursatmumci6';SslMode=none";
+        
+        
         MySqlConnection connection;
 
-        public ItemDAL()
+        public ItemDALMoq()
         {
-            connection = new MySqlConnection(connectionString);
         }
 
         public List<ItemDTO> GetAllItems()
         {
-            List<ItemDTO> itemDTOs = new List<Interface.ItemDTO>();
-            try
-            {
-                connection.Open();
-                string query = "SELECT * FROM `item`;";
-                var cmd = new MySqlCommand(query, connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    ItemDTO itemDTO = new ItemDTO();
-                    itemDTO.Id = reader.GetInt32(0);
-                    itemDTO.Name = reader.GetString(1);
-                    string type = reader.GetString(2);
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (itemDTO.Type.ToString() != type)
-                        {
-                            itemDTO.Type++;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    itemDTO.Charges = reader.GetInt32(3);
-                    itemDTO.ConsumptionRate = reader.GetDouble(4);
-                    itemDTO.SelfHealSpeed = reader.GetDouble(5);
-                    itemDTO.HealSpeed = reader.GetDouble(6);
-                    itemDTO.RepairSpeed = reader.GetDouble(7);
-                    itemDTO.SaboSpeed = reader.GetDouble(8);
-                    itemDTO.BlindDuration = reader.GetDouble(9);
-                    itemDTO.BlindSpeed = reader.GetDouble(10);
-                    itemDTO.BeamRange = reader.GetDouble(11);
-                    itemDTO.BeamAngle = reader.GetDouble(12);
-                    itemDTO.Aurarange = reader.GetDouble(13);
-                    itemDTO.Icon = (byte[])reader.GetValue(14);
-                    itemDTOs.Add(itemDTO);
-                }
-                connection.Close();
-            }
-            catch(Exception e)
-            {
-                string error = e.Message;
-                Console.WriteLine($"Can not open connection ! \n{error}");
-            }
-            return itemDTOs;
+            List<ItemDTO> items = JsonSerializer.Deserialize<List<ItemDTO>>(File.ReadAllText(Environment.SpecialFolder.ApplicationData + @"\" + "items.txt"));
+            return items;
         }
 
         public List<ItemDTO> GetAllItems(string type)

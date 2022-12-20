@@ -14,7 +14,7 @@
           </div>
           <div class="row">
             <h3>Sabotage {{loadout.nrOfSabo.toFixed(2)}} hooks </h3>
-            <progress max="5.5" v-bind:value="loadout.nrOfSabo"></progress>
+            <progress max="9" v-bind:value="loadout.nrOfSabo"></progress>
           </div>
           <div class="row">
             <h3>Time to sabotage: {{loadout.timetoSabo.toFixed(2)}} seconds </h3>

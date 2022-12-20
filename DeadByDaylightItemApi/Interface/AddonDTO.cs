@@ -6,22 +6,22 @@ namespace Interface
 {
     public struct AddonDTO
     {
-        public int Id;
-        public string Name;
-        public Type Type;
-        public int Charges;
-        public double ConsumptionRate;
-        public double SelfHealSpeed;
-        public double HealSpeed;
-        public double RepairSpeed;
-        public double SaboSpeed;
-        public double BlindDuration;
-        public double BlindSpeed;
-        public double BeamRange;
-        public double BeamAngle;
-        public double Aurarange;
-        public byte[] Icon;
-        
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Type Type { get; set; }
+        public int Charges { get; set; }
+        public double ConsumptionRate { get; set; }
+        public double SelfHealSpeed { get; set; }
+        public double HealSpeed { get; set; }
+        public double RepairSpeed { get; set; }
+        public double SaboSpeed { get; set; }
+        public double BlindDuration { get; set; }
+        public double BlindSpeed { get; set; }
+        public double BeamRange { get; set; }
+        public double BeamAngle { get; set; }
+        public double Aurarange { get; set; }
+        public byte[] Icon { get; set; }
+
         public AddonDTO(Type type)
         {
             Id = 0;

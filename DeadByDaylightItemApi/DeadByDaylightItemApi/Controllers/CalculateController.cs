@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Logic;
 using System.Text.Json;
 using Microsoft.VisualBasic;
+using Org.BouncyCastle.Utilities;
 
 namespace DeadByDaylightItemApi.Controllers
 {
@@ -47,6 +48,25 @@ namespace DeadByDaylightItemApi.Controllers
         {
             Interface.Type type1 = (Interface.Type)Convert.ToInt16(type);
             Loadout loadout = Calculator.GetLongestDuration(type1);
+            loadout.Update();
+            return loadout;
+        }
+
+        [HttpGet]
+        [Route("GetToolboxTimesave/{itemid:int}")]
+        public Loadout GetTimeSaved(int itemid)
+        {
+            Loadout loadout = Calculator.GetMostTimeSaved(itemid);
+            loadout.Update();
+            return loadout;
+        }
+
+        [HttpGet]
+        [Route("GetToolboxTimesave")]
+        public Loadout GetTimeSaved(string type)
+        {
+            Interface.Type type1 = (Interface.Type)Convert.ToInt16(type);
+            Loadout loadout = Calculator.GetMostTimeSaved(type1);
             loadout.Update();
             return loadout;
         }

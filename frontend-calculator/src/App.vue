@@ -1,10 +1,13 @@
 <template>
-  <h1>Item Calculator</h1>
+  <vueTitle :title="'Dbd Calculator'"></vueTitle>
   <div class="page">
 
     <div class="half">
       <div>
-        <h2>loadout</h2>
+        <div class="loadout"> 
+          <h2>loadout</h2>
+          <button class="button" @click="Clear">Clear</button>
+        </div>
         <ItemAddonRow :item="selecteditem" :addon1="selectedaddon1" :addon2="selectedaddon2" @slot="getSlot($event)"/>
       </div>
       <div>
@@ -35,30 +38,41 @@
       <div>
         <h2>SELECT</h2>
         <div class="select">
-          <div v-if="(selecteditem == Object || selecteditem.type == 0)">
-          <h3>medkit</h3>
-          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="0" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
-        </div>
+          <div v-if="(selecteditem == Object || selecteditem.type == 0)" class="selectrow">
+            <h3>medkit</h3>
+            <div class="calcbtns"> 
+              <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="0" :item="selecteditem" :baseaddress="this.baseaddress" @loadout="UpdateLoadout($event)"></calculateBtn>
+              </div>
+            </div>
 
-        <div v-if="(selecteditem == Object || selecteditem.type == 1)">
+        <div v-if="(selecteditem == Object || selecteditem.type == 1)" class="selectrow">
           <h3>toolbox</h3>
-          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="1" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
-        </div>
+            <div class="calcbtns"> 
+              <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="1" :item="selecteditem" :baseaddress="this.baseaddress" @loadout="UpdateLoadout($event)"></calculateBtn>
+              <calculateBtn :text="'Calculate Most Time Saved'" :path="'GetToolboxTimesave'" :type="1" :item="selecteditem" :baseaddress="this.baseaddress" @loadout="UpdateLoadout($event)"></calculateBtn>
+            </div>
+          </div>
 
-        <div v-if="(selecteditem == Object || selecteditem.type == 2)">
+        <div v-if="(selecteditem == Object || selecteditem.type == 2)" class="selectrow">
           <h3>flashlight</h3>
-          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="2" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
+          <div class="calcbtns"> 
+          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="2" :item="selecteditem" :baseaddress="this.baseaddress" @loadout="UpdateLoadout($event)"></calculateBtn>
+        </div>
         </div>
 
-        <div v-if="(selecteditem == Object || selecteditem.type == 3)">
+        <div v-if="(selecteditem == Object || selecteditem.type == 3)" class="selectrow">
           <h3>key</h3>
-          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="3" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
-        </div>
+            <div class="calcbtns"> 
+              <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="3" :item="selecteditem" :baseaddress="this.baseaddress" @loadout="UpdateLoadout($event)"></calculateBtn>
+            </div>
+          </div>
 
-        <div v-if="(selecteditem == Object || selecteditem.type == 4)">
+        <div v-if="(selecteditem == Object || selecteditem.type == 4)" class="selectrow">
           <h3>map</h3>
-          <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="4" :item="selecteditem" @loadout="UpdateLoadout($event)"></calculateBtn>
-        </div>
+            <div class="calcbtns"> 
+              <calculateBtn :text="'Calculate Longest Duration'" :path="'GetLongestDuration'" :type="4" :item="selecteditem" :baseaddress="this.baseaddress" @loadout="UpdateLoadout($event)"></calculateBtn>
+            </div>
+          </div>
         </div>
         
 
@@ -68,6 +82,7 @@
 </template>
 
 <script>
+import titleComponent from './components/Title.vue';
 import InventoryItemSlot from "./components/InventoryItemSlot"
 import ItemAddonRow from "./components/ItemAddonRow"
 import CalculateBtn from "./components/CalculateBtn"
@@ -75,7 +90,9 @@ import Info from "./components/Info/Info.vue"
 import axios from "axios"
 export default {
   name: 'App',
+  title: 'Dbd Calculator',
   components: {
+    vueTitle: titleComponent,
     InventoryItemSlot: InventoryItemSlot,
     ItemAddonRow : ItemAddonRow,
     CalculateBtn: CalculateBtn,
@@ -83,6 +100,7 @@ export default {
   },
   data(){
     return{
+      baseaddress: 'https://deadbydaylightitemapi20221218193729.azurewebsites.net',
       items:[],
       allItems:[],
       addons:[],
@@ -100,17 +118,17 @@ export default {
   },
   methods : {
     async getItems(){
-    let result = await axios.get("https://localhost:7134/Item/GetAll");
+    let result = await axios.get(this.baseaddress + "/Item/GetAll");
     this.allItems = result.data;
     console.log(result.data);
     },
     async getAddons(){
-    let result = await axios.get("https://localhost:7134/Addon/GetAll");
+    let result = await axios.get(this.baseaddress + "/Addon/GetAll");
     this.allAddons = result.data;
     console.log(result.data);
     },
     async getAddonsByType(type){
-    let result = await axios.get("https://localhost:7134/Addon/GetAll/"+ type);
+    let result = await axios.get(this.baseaddress + "/Addon/GetAll/"+ type);
     this.addons = result.data;
     console.log(result.data);
     },
@@ -119,12 +137,19 @@ export default {
     let addon2id = 0
     if(this.selectedaddon1.id != undefined) addon1id = this.selectedaddon1.id
     if(this.selectedaddon2.id != undefined) addon2id = this.selectedaddon2.id
-    let result = await axios.get("https://localhost:7134/Calculate/Update?itemid="+this.selecteditem.id+"&addon1id="+addon1id+"&addon2id="+ addon2id);
+    let result = await axios.get(this.baseaddress + "/Calculate/Update?itemid="+this.selecteditem.id+"&addon1id="+addon1id+"&addon2id="+ addon2id);
     this.loadout = result.data;
     console.log(result.data);
     },
     getSlot(data){
       this.selectedindex = data;
+    },
+    Clear(){
+      this.selecteditem = Object
+      this.selectedaddon1 = Object
+      this.selectedaddon2 = Object
+      this.selectedindex = 0
+      this.Update()
     },
     UpdateLoadout(loadout){
       this.selecteditem = loadout.item
@@ -176,6 +201,7 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: row;
+  padding-top: 20pt;
 }
 .half{
   display: flex;
@@ -183,6 +209,15 @@ export default {
   padding-left: 5%;
   padding-right: 5%;
   width: 40%;
+}
+.loadout{
+  display: flex;
+}
+.button{
+  width: 50pt;
+  height: 20pt;
+  align-self: center;
+  margin-left: 100pt;
 }
 .inventory{
   display: flex;
@@ -192,10 +227,31 @@ export default {
 }
 .select{
   display: flex;
-  padding: 25px;
-  flex-direction: row;
-  justify-content: space-between;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: left;
+  align-self: left;
   flex-wrap: wrap;
+}
+.selectrow{
+  display: flex;
+  margin-bottom: 20pt;
+  flex-direction: row;
+  justify-content: left;
+  align-self: left;
+  flex-wrap: wrap;
+}
+.calcbtns{
+  position:absolute;
+  display: flex;
+  flex-direction: row;
+  margin-left: 60pt;
+}
+.calcbtn{
+  margin-left: 20pt;
+  width:80pt;
+  height: 60pt;
+  
 }
 .selectbtn{
   width:80pt;
