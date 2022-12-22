@@ -3,8 +3,8 @@
   <div class="page">
 
     <div class="half">
-      <div>
-        <div class="loadout"> 
+      <div class="loadout">
+        <div class="loadoutrow"> 
           <h2>loadout</h2>
           <button class="button" @click="Clear">Clear</button>
         </div>
@@ -201,16 +201,16 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  padding-top: 20pt;
+  padding-top: 1.5%;
 }
 .half{
   display: flex;
   flex-direction: column;
-  padding-left: 5%;
-  padding-right: 5%;
-  width: 40%;
+  padding-left: 2%;
+  padding-right: 2%;
+  width: 45%;
 }
-.loadout{
+.loadoutrow{
   display: flex;
 }
 .button{
@@ -221,7 +221,7 @@ export default {
 }
 .inventory{
   display: flex;
-  padding: 25px;
+  padding-left: 5%;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -263,8 +263,8 @@ export default {
           display: flex;
           justify-content: flex-start;
           flex-direction: column ;;
-          width: 100pt;
-          height: 100pt;
+          width: 15%;
+          height: 15%;
 }
 body {
   background-image: url('https://deadbydaylight.com/static/f666c1750beb64be359b67b8c3a49139/66180/fog-background.jpg');

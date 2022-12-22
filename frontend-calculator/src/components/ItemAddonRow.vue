@@ -60,24 +60,22 @@
     .row{
       display: flex;
       flex-direction: row;
+      margin-left: 5%;
     }
       .itemdiv{
         display: flex;
         flex-direction: column;
         align-items: center;
         align-content: center;
-        margin:10pt;
-          width: 100pt;
-          height: 100pt;
+        width: 17%;
+        margin-right: 2%;
       }
       .addondiv{
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 10pt;
-        margin-top: 20pt;
-          width: 80pt;
-          height: 80pt;
+        margin: 2%;
+        width: 13%;
           
       }
       a {

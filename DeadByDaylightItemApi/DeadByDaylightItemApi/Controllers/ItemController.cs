@@ -21,7 +21,7 @@ namespace DeadByDaylightItemApi.Controllers
         [Route("GetAll")]
         public string Get()
         {
-            List<Item> items = itemContainer.GetAllItems();
+            List<Item> items = Calculator.Items;
             string json = "[";
             for (int i = 0; i<items.Count; i++)
             {

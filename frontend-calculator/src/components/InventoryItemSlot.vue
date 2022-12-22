@@ -1,5 +1,5 @@
 <template>
-  <input type="image" :src="('data:image/jpeg;base64,'+item.icon)" @click="click">
+  <input class="slot" type="image" :src="('data:image/jpeg;base64,'+item.icon)" @click="click">
 </template> 
 
 <script>
@@ -18,9 +18,9 @@ export default {
 </script>
 
 <style scoped>
-.button{
+.slot{
   width: 100%;
   height: 100%;
-  padding: 0px;
+  
 }
 </style>

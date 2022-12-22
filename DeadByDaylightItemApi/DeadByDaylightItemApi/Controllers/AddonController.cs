@@ -22,7 +22,7 @@ namespace DeadByDaylightaddonApi.Controllers
         [Route("GetAll")]
         public string Get()
         {
-            List<Addon> addons = addonContainer.GetAllAddons();
+            List<Addon> addons = Calculator.Addons;
             string json = "[";
             for (int i = 0; i < addons.Count; i++)
             {
