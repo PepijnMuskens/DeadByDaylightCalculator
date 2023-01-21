@@ -88,6 +88,9 @@ import ItemAddonRow from "./components/ItemAddonRow"
 import CalculateBtn from "./components/CalculateBtn"
 import Info from "./components/Info/Info.vue"
 import axios from "axios"
+
+import jsonitems from "../src/assets/items"
+import jsonaddons from "../src/assets/addons"
 export default {
   name: 'App',
   title: 'Dbd Calculator',
@@ -118,14 +121,12 @@ export default {
   },
   methods : {
     async getItems(){
-    let result = await axios.get(this.baseaddress + "/Item/GetAll");
-    this.allItems = result.data;
-    console.log(result.data);
+    this.allItems = jsonitems
+    console.log(jsonitems);
     },
     async getAddons(){
-    let result = await axios.get(this.baseaddress + "/Addon/GetAll");
-    this.allAddons = result.data;
-    console.log(result.data);
+    this.allAddons = jsonaddons
+    console.log(jsonaddons);
     },
     async getAddonsByType(type){
     let result = await axios.get(this.baseaddress + "/Addon/GetAll/"+ type);

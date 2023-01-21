@@ -10,12 +10,12 @@ namespace Data
     public class ItemDAL : IItemContainer
     {
         private string connectionString = "server=sql7.freesqldatabase.com;user=sql7585399;database=sql7585399;port=3306;password='guWYYxITAN';SslMode=none";
-        private string connectionStringlocal = "server=studmysql01.fhict.local;user=dbi437675;database=dbi437675;port=3306;password='Mursatmumci6';SslMode=none";
+        private string connectionStringlocal = "server=127.0.0.1;user=root;database=dbddb2;port=3306;password='';SslMode=none";
         MySqlConnection connection;
 
         public ItemDAL()
         {
-            connection = new MySqlConnection(connectionString);
+            connection = new MySqlConnection(connectionStringlocal);
         }
 
         public List<ItemDTO> GetAllItems()

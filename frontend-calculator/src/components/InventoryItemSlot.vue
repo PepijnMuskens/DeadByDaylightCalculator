@@ -1,9 +1,9 @@
 <template>
   <input @mouseover="hover = true" @mouseleave="hover = false" class="slot" type="image" :src="('data:image/jpeg;base64,'+item.icon)" @click="click">
   <div v-if="hover" class="info">
-    <h3>{{item.name}}</h3>
-    <p>{{item.charges}} charges</p>
-    <p>{{item.selfHealSpeed * 100}}% healspeed</p>
+    <h3 class="text">{{item.name}}</h3>
+    <p class="text">{{item.charges}} charges</p>
+    <p v-if="item.selfHealSpeed != null" class="text">{{item.selfHealSpeed * 100}}% healspeed</p>
   </div>
 </template> 
 
@@ -36,9 +36,17 @@ export default {
 .info{
   position: absolute;
   border-style: solid;
-  width: 10%;
+  border-color: black;
+  align-items: left;
+  width: 15%;
   height: 20%;
-  background-color: gray;
-  margin-left: 6%;
+  background-color: #434343d1;
+  margin-left: 7%;
+  padding-left: 1%;
+}
+.text{
+  display: flex;
+  align-self: left;
+  color: black;
 }
 </style>

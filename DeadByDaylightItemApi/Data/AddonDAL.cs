@@ -13,7 +13,7 @@ namespace Data
 
         public AddonDAL()
         {
-            connection = new MySqlConnection(connectionString);
+            connection = new MySqlConnection(connectionStringlocal);
         }
 
         public List<Interface.AddonDTO> GetAllAddons()
